@@ -50,8 +50,8 @@ export const loader = async ({ request }) => {
   const estimatedSales = Math.floor(totalShares * 0.08);
   const estimatedRevenue = estimatedSales * 45;
 
-  return { 
-    settings, 
+  return {
+    settings,
     shop,
     analytics: {
       sharesToday,
@@ -117,12 +117,12 @@ export default function Index() {
 
   // Format number display - show dash instead of 0 for new installs
   const formatStat = (value, isNew) => {
-    if (isNew && value === 0) return "–";
+    if (isNew && value === 0) return "—";
     return value;
   };
 
   return (
-    <s-page heading="SwiftShare Dashboard">
+    <s-page heading="Wazap Dashboard">
       <s-button slot="primary-action" variant="primary" onClick={handleSave} loading={isSaving}>
         Save Settings
       </s-button>
@@ -192,7 +192,7 @@ export default function Index() {
           textAlign: 'center'
         }}>
           <div style={{ fontSize: '48px', marginBottom: '12px' }}>🎉</div>
-          <h2 style={{ margin: '0 0 8px 0' }}>Welcome to SwiftShare!</h2>
+          <h2 style={{ margin: '0 0 8px 0' }}>Welcome to Wazap!</h2>
           <p style={{ color: '#555', margin: '0 0 20px 0' }}>
             Your widget is ready. Test it yourself to see how it works!
           </p>
@@ -211,10 +211,10 @@ export default function Index() {
       <s-section heading="📊 Performance Overview">
         <s-stack direction="inline" gap="loose" wrap>
           {/* Shares Today */}
-          <div style={{ 
+          <div style={{
             flex: '1 1 200px',
-            padding: '20px', 
-            background: analytics.isNewInstall 
+            padding: '20px',
+            background: analytics.isNewInstall
               ? 'linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'
               : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             borderRadius: '12px',
@@ -231,10 +231,10 @@ export default function Index() {
           </div>
 
           {/* Total Shares */}
-          <div style={{ 
+          <div style={{
             flex: '1 1 200px',
-            padding: '20px', 
-            background: analytics.isNewInstall 
+            padding: '20px',
+            background: analytics.isNewInstall
               ? 'linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'
               : 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
             borderRadius: '12px',
@@ -249,10 +249,10 @@ export default function Index() {
           </div>
 
           {/* WhatsApp Clicks (renamed from Chats) */}
-          <div style={{ 
+          <div style={{
             flex: '1 1 200px',
-            padding: '20px', 
-            background: analytics.isNewInstall 
+            padding: '20px',
+            background: analytics.isNewInstall
               ? 'linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'
               : 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
             borderRadius: '12px',
@@ -269,10 +269,10 @@ export default function Index() {
           </div>
 
           {/* Conversion Rate */}
-          <div style={{ 
+          <div style={{
             flex: '1 1 200px',
-            padding: '20px', 
-            background: analytics.isNewInstall 
+            padding: '20px',
+            background: analytics.isNewInstall
               ? 'linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'
               : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
             borderRadius: '12px',
@@ -281,7 +281,7 @@ export default function Index() {
           }}>
             <div style={{ fontSize: '14px', opacity: 0.9 }}>Est. Conversion</div>
             <div style={{ fontSize: '36px', fontWeight: 'bold' }}>
-              {analytics.isNewInstall ? "–" : "~8%"}
+              {analytics.isNewInstall ? "—" : "~8%"}
             </div>
             <div style={{ fontSize: '12px', opacity: 0.7 }}>Industry average</div>
           </div>
@@ -291,16 +291,16 @@ export default function Index() {
       {/* PRO Features Teaser */}
       <s-section heading="🔒 Pro Analytics">
         <div style={{ position: 'relative' }}>
-          <div style={{ 
+          <div style={{
             filter: 'blur(3px)',
             opacity: 0.7,
             pointerEvents: 'none',
             userSelect: 'none'
           }}>
             <s-stack direction="inline" gap="loose" wrap>
-              <div style={{ 
+              <div style={{
                 flex: '1 1 280px',
-                padding: '20px', 
+                padding: '20px',
                 background: '#fafafa',
                 borderRadius: '12px',
                 border: '1px solid #eee'
@@ -322,9 +322,9 @@ export default function Index() {
                 </div>
               </div>
 
-              <div style={{ 
+              <div style={{
                 flex: '1 1 200px',
-                padding: '20px', 
+                padding: '20px',
                 background: '#fafafa',
                 borderRadius: '12px',
                 border: '1px solid #eee'
@@ -334,9 +334,9 @@ export default function Index() {
                 <div style={{ fontSize: '12px', color: '#999' }}>Attributed orders</div>
               </div>
 
-              <div style={{ 
+              <div style={{
                 flex: '1 1 200px',
-                padding: '20px', 
+                padding: '20px',
                 background: '#fafafa',
                 borderRadius: '12px',
                 border: '1px solid #eee'
@@ -361,7 +361,7 @@ export default function Index() {
           </div>
 
           {/* Upgrade Overlay */}
-          <div style={{ 
+          <div style={{
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -381,7 +381,7 @@ export default function Index() {
               <div style={{ fontSize: '13px', color: '#666', marginBottom: '16px' }}>
                 See exactly which products drive sales
               </div>
-              <button 
+              <button
                 onClick={() => setShowUpgradeModal(true)}
                 style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -394,7 +394,7 @@ export default function Index() {
                   fontSize: '14px'
                 }}
               >
-                Upgrade – $9.99/mo
+                Upgrade — $9.99/mo
               </button>
             </div>
           </div>
@@ -409,7 +409,7 @@ export default function Index() {
             <s-stack direction="inline" gap="base" align="space-between">
               <s-stack direction="block" gap="tight">
                 <s-text fontWeight="bold">Enable Widget</s-text>
-                <s-text tone="subdued">Show SwiftShare on your store</s-text>
+                <s-text tone="subdued">Show Wazap on your store</s-text>
               </s-stack>
               <input
                 type="checkbox"
@@ -556,19 +556,19 @@ export default function Index() {
                 color: '#999'
               }}
             >×</button>
-            
+
             <div style={{ fontSize: 56, marginBottom: 16 }}>🚀</div>
             <h2 style={{ margin: '0 0 8px 0', fontSize: 24 }}>Upgrade to Pro</h2>
             <p style={{ color: '#666', margin: '0 0 24px 0', fontSize: 15 }}>
               Know exactly which products your customers love to share.
             </p>
-            
-            <div style={{ 
-              background: '#f8f9fa', 
-              padding: 20, 
-              borderRadius: 12, 
+
+            <div style={{
+              background: '#f8f9fa',
+              padding: 20,
+              borderRadius: 12,
               textAlign: 'left',
-              marginBottom: 24 
+              marginBottom: 24
             }}>
               <div style={{ fontWeight: 'bold', marginBottom: 12 }}>Everything in Pro:</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -580,12 +580,12 @@ export default function Index() {
                 <div>✅ Priority support</div>
               </div>
             </div>
-            
+
             <div style={{ marginBottom: 20 }}>
               <span style={{ fontSize: 42, fontWeight: 'bold' }}>$9.99</span>
               <span style={{ color: '#666', fontSize: 16 }}>/month</span>
             </div>
-            
+
             <button style={{
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
