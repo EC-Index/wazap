@@ -1,0 +1,184 @@
+{% comment %}
+  Wazap v2 - The WhatsApp Shopify Connector
+  Features: Chat, Share, Multiple Agents, Business Hours, Analytics, Cart Recovery
+{% endcomment %}
+
+{% if block.settings.whatsapp_number != blank %}
+
+{% liquid
+  assign agents_json = '[]'
+  if block.settings.agent1_number != blank
+    assign agent1 = '{"name":"' | append: block.settings.agent1_name | append: '","number":"' | append: block.settings.agent1_number | append: '","role":"' | append: block.settings.agent1_role | append: '"}'
+    assign agents_json = '[' | append: agent1
+    
+    if block.settings.agent2_number != blank
+      assign agent2 = ',{"name":"' | append: block.settings.agent2_name | append: '","number":"' | append: block.settings.agent2_number | append: '","role":"' | append: block.settings.agent2_role | append: '"}'
+      assign agents_json = agents_json | append: agent2
+    endif
+    
+    assign agents_json = agents_json | append: ']'
+  endif
+%}
+
+{% liquid
+  assign hours_json = 'null'
+  if block.settings.business_hours_enabled
+    assign hours_json = '{'
+    assign hours_json = hours_json | append: '"monday":{"enabled":true,"start":"' | append: block.settings.weekday_start | append: '","end":"' | append: block.settings.weekday_end | append: '"},'
+    assign hours_json = hours_json | append: '"tuesday":{"enabled":true,"start":"' | append: block.settings.weekday_start | append: '","end":"' | append: block.settings.weekday_end | append: '"},'
+    assign hours_json = hours_json | append: '"wednesday":{"enabled":true,"start":"' | append: block.settings.weekday_start | append: '","end":"' | append: block.settings.weekday_end | append: '"},'
+    assign hours_json = hours_json | append: '"thursday":{"enabled":true,"start":"' | append: block.settings.weekday_start | append: '","end":"' | append: block.settings.weekday_end | append: '"},'
+    assign hours_json = hours_json | append: '"friday":{"enabled":true,"start":"' | append: block.settings.weekday_start | append: '","end":"' | append: block.settings.weekday_end | append: '"},'
+    assign hours_json = hours_json | append: '"saturday":{"enabled":' | append: block.settings.weekend_enabled | append: ',"start":"' | append: block.settings.weekend_start | append: '","end":"' | append: block.settings.weekend_end | append: '"},'
+    assign hours_json = hours_json | append: '"sunday":{"enabled":' | append: block.settings.weekend_enabled | append: ',"start":"' | append: block.settings.weekend_start | append: '","end":"' | append: block.settings.weekend_end | append: '"}'
+    assign hours_json = hours_json | append: '}'
+  endif
+%}
+
+<div id="wazap-widget" 
+     data-whatsapp="{{ block.settings.whatsapp_number }}"
+     data-store-name="{{ shop.name | escape }}"
+     data-product-title="{{ product.title | default: '' | escape }}"
+     data-product-url="{{ canonical_url | default: request.origin }}"
+     data-product-image="{{ product.featured_image | image_url: width: 800 }}"
+     data-chat-text="{{ block.settings.chat_text | default: 'Chat' }}"
+     data-share-button-text="{{ block.settings.share_button_text | default: 'Share' }}"
+     data-agents="{{ agents_json | escape }}"
+     data-business-hours="{{ hours_json | escape }}"
+     data-analytics="{{ block.settings.analytics_enabled }}"
+     style="display:none;">
+</div>
+
+{{ 'wazap.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazap.js' | asset_url }}" defer></script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Wazap",
+  "target": "body",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "📱 Main Settings"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp Number",
+      "info": "Country code without + (e.g., 491701234567)"
+    },
+    {
+      "type": "text",
+      "id": "chat_text",
+      "label": "Chat Button Text",
+      "default": "Chat"
+    },
+    {
+      "type": "select",
+      "id": "share_button_text",
+      "label": "Share Button Text",
+      "options": [
+        { "value": "Share", "label": "Share" },
+        { "value": "Get opinion", "label": "Get opinion" },
+        { "value": "Ask a friend", "label": "Ask a friend" }
+      ],
+      "default": "Share"
+    },
+    {
+      "type": "header",
+      "content": "👥 Agent 1"
+    },
+    {
+      "type": "text",
+      "id": "agent1_name",
+      "label": "Name"
+    },
+    {
+      "type": "text",
+      "id": "agent1_number",
+      "label": "Number"
+    },
+    {
+      "type": "text",
+      "id": "agent1_role",
+      "label": "Role",
+      "default": "Support"
+    },
+    {
+      "type": "header",
+      "content": "👥 Agent 2 (optional)"
+    },
+    {
+      "type": "text",
+      "id": "agent2_name",
+      "label": "Name"
+    },
+    {
+      "type": "text",
+      "id": "agent2_number",
+      "label": "Number"
+    },
+    {
+      "type": "text",
+      "id": "agent2_role",
+      "label": "Role",
+      "default": "Sales"
+    },
+    {
+      "type": "header",
+      "content": "🕐 Business Hours"
+    },
+    {
+      "type": "checkbox",
+      "id": "business_hours_enabled",
+      "label": "Enable Business Hours",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "weekday_start",
+      "label": "Weekday Start (Mon-Fri)",
+      "default": "09:00"
+    },
+    {
+      "type": "text",
+      "id": "weekday_end",
+      "label": "Weekday End",
+      "default": "18:00"
+    },
+    {
+      "type": "checkbox",
+      "id": "weekend_enabled",
+      "label": "Open on Weekends",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "weekend_start",
+      "label": "Weekend Start",
+      "default": "10:00"
+    },
+    {
+      "type": "text",
+      "id": "weekend_end",
+      "label": "Weekend End",
+      "default": "14:00"
+    },
+    {
+      "type": "header",
+      "content": "📊 Tracking"
+    },
+    {
+      "type": "checkbox",
+      "id": "analytics_enabled",
+      "label": "Google Analytics",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

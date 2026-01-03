@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model ProductCalculator {
+  id              String   @id @default(cuid())
+  shop            String
+  productId       String
+  productTitle    String
+  unitType        String
+  unitLabel       String
+  coverage        Float
+  coverageUnit    String
+  wasteFactor     Float    @default(1.1)
+  minQuantity     Float    @default(1)
+  aiExtracted     Boolean  @default(false)
+  sourceText      String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@unique([shop, productId])
+}
+
+model ShopSettings {
+  id              String   @id @default(cuid())
+  shop            String   @unique
+  
+  // Review Angel fields
+  judgemeDomain   String?
+  judgemeApiToken String?
+  
+  // SwiftShare fields
+  whatsappNumber  String?
+  widgetEnabled   Boolean  @default(true)
+  chatText        String   @default("Chat")
+  shareText       String   @default("Hey, check out {product} at {store}! {url}")
+  position        String   @default("bottom-right")
+  theme           String   @default("whatsapp")
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  shop      String
+  eventType String
+  productId String?
+  createdAt DateTime @default(now())
+  
+  @@index([shop, createdAt])
+  @@index([shop, eventType])
+}

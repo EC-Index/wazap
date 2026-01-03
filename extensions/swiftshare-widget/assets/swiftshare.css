@@ -1,0 +1,28 @@
+/**
+ * SwipeUp v2.2 - Styles
+ * Combined Share + WhatsApp Button
+ */
+
+/* Swipeable Image */
+.swipeup-swipeable {
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .swipeup-swipeable,
+  .swipeup-buttons,
+  .swipeup-btn {
+    transition: none !important;
+  }
+}
+
+/* Print */
+@media print {
+  .swipeup-buttons,
+  .swipeup-overlay {
+    display: none !important;
+  }
+}

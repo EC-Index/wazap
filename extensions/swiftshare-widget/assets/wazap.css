@@ -1,0 +1,22 @@
+/**
+ * Wazap v2 - The WhatsApp Shopify Connector
+ * Minimal CSS - most styles are inline
+ */
+
+@media print {
+  #wazap-widget,
+  .wazap-agent-popup,
+  .wazap-recovery-prompt {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wazap-btn,
+  .wazap-desktop__btn,
+  .wazap-agent-popup,
+  .wazap-recovery-prompt {
+    animation: none !important;
+    transition: none !important;
+  }
+}

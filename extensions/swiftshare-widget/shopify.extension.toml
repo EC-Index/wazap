@@ -1,0 +1,13 @@
+api_version = "2025-01"
+
+[[extensions]]
+
+uid = "d2be56cf-7db6-f9d7-e98f-5196b2f6d3bd43dd08e1"
+
+type = "theme"
+name = "Wazap"
+handle = "swiftshare-widget"
+
+[[extensions.targeting]]
+target = "body"
+template = "blocks/swiftshare-widget.liquid"

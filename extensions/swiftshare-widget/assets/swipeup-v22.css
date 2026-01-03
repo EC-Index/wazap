@@ -1,0 +1,9 @@
+/**
+ * WhatsVibe v1 - Minimal CSS
+ */
+
+@media print {
+  #swiftshare-widget {
+    display: none !important;
+  }
+}

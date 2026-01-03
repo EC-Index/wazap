@@ -1,0 +1,140 @@
+/**
+ * SwipeUp v2.1 - Styles
+ * Swipe UP to Share
+ */
+
+/* ============================================
+   FLOATING BUTTON
+   ============================================ */
+
+.swiftshare {
+  position: fixed;
+  bottom: 30px;
+  z-index: 9990;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+}
+
+.swiftshare--bottom-right { right: 20px; }
+.swiftshare--bottom-left { left: 20px; }
+.swiftshare--bottom-center { left: 50%; transform: translateX(-50%); }
+
+.swiftshare__bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.swiftshare__btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+
+.swiftshare__btn:hover { transform: scale(1.05); }
+.swiftshare__btn:active { transform: scale(0.98); }
+
+.swiftshare__btn--chat {
+  background: #25D366;
+  color: white;
+}
+
+.swiftshare__btn--share {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.swiftshare--dark .swiftshare__bar { background: rgba(30, 30, 30, 0.95); }
+.swiftshare--dark .swiftshare__btn--share { background: #404040; color: #fff; }
+
+.swiftshare__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.swiftshare__text { white-space: nowrap; }
+
+/* Mobile floating button */
+@media (max-width: 768px) {
+  .swiftshare {
+    bottom: 20px;
+    right: 15px;
+    left: auto !important;
+    transform: none !important;
+  }
+  
+  .swiftshare__bar {
+    flex-direction: column;
+    padding: 6px;
+    gap: 6px;
+    border-radius: 30px;
+  }
+  
+  .swiftshare__btn {
+    padding: 14px;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    justify-content: center;
+  }
+  
+  .swiftshare__text { display: none; }
+  .swiftshare__icon { width: 22px; height: 22px; }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  @media (max-width: 768px) {
+    .swiftshare { bottom: calc(20px + env(safe-area-inset-bottom)); }
+  }
+}
+
+/* ============================================
+   SWIPEUP: Swipeable Image
+   ============================================ */
+
+.swipeup-swipeable {
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
+
+/* ============================================
+   ACCESSIBILITY & PRINT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .swiftshare__btn,
+  .swipeup-swipeable {
+    transition: none;
+  }
+}
+
+.swiftshare__btn:focus {
+  outline: 2px solid #25D366;
+  outline-offset: 2px;
+}
+
+.swiftshare__btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media print {
+  .swiftshare,
+  .swipeup-icon,
+  .swipeup-overlay {
+    display: none !important;
+  }
+}
