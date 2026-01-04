@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wazap for WooCommerce - Free WhatsApp Plugin</title>
+  <meta name="description" content="Add WhatsApp chat & share buttons to your WooCommerce store. Free forever. Multiple agents, business hours, cart recovery included.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+  
+  <style>
+    :root {
+      --whatsapp: #25D366;
+      --whatsapp-dark: #128C7E;
+      --wordpress: #21759b;
+      --woo-purple: #7f54b3;
+      --dark: #0a0a0a;
+      --gray-900: #111111;
+      --gray-800: #1a1a1a;
+      --gray-700: #2a2a2a;
+      --gray-600: #3a3a3a;
+      --gray-400: #888888;
+      --gray-300: #aaaaaa;
+      --white: #ffffff;
+      --glow: rgba(127, 84, 179, 0.4);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Animated Background */
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(127, 84, 179, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(33, 117, 155, 0.1), transparent),
+        var(--dark);
+      z-index: -1;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--woo-purple);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logo-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: var(--gray-300);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: white;
+    }
+    
+    .nav-cta {
+      padding: 0.75rem 1.5rem;
+      background: var(--woo-purple);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px var(--glow);
+    }
+    
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px var(--glow);
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .hero-content {
+      flex: 1;
+      max-width: 650px;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(127, 84, 179, 0.1);
+      border: 1px solid rgba(127, 84, 179, 0.3);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--woo-purple);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease;
+    }
+    
+    .hero-badge svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease 0.1s backwards;
+    }
+    
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--woo-purple), #9b6dd1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero h1 .highlight-green {
+      background: linear-gradient(135deg, var(--whatsapp), #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--gray-300);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.6s ease 0.2s backwards;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.3s backwards;
+    }
+    
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: var(--woo-purple);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 30px var(--glow);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px var(--glow);
+    }
+    
+    .btn-primary svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: 1px solid var(--gray-600);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: var(--gray-800);
+      border-color: var(--gray-400);
+    }
+    
+    .hero-note {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      animation: fadeInUp 0.6s ease 0.4s backwards;
+    }
+    
+    .hero-note svg {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+      stroke: var(--whatsapp);
+    }
+    
+    /* Hero Visual */
+    .hero-visual {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1s ease 0.5s backwards;
+    }
+    
+    .plugin-preview {
+      background: var(--gray-900);
+      border-radius: 20px;
+      border: 1px solid var(--gray-700);
+      padding: 24px;
+      max-width: 400px;
+      box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+    }
+    
+    .plugin-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray-700);
+    }
+    
+    .plugin-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--woo-purple), #9b6dd1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .plugin-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    .plugin-info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+    
+    .plugin-info span {
+      color: var(--gray-400);
+      font-size: 0.9rem;
+    }
+    
+    .plugin-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .plugin-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--gray-800);
+      border-radius: 12px;
+    }
+    
+    .plugin-feature-icon {
+      font-size: 1.25rem;
+    }
+    
+    .plugin-feature span {
+      font-size: 0.95rem;
+    }
+    
+    .plugin-feature .free-tag {
+      margin-left: auto;
+      background: rgba(37, 211, 102, 0.1);
+      color: var(--whatsapp);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    /* Installation Steps */
+    .installation {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-label {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--woo-purple);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+    
+    .installation h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 4rem;
+      text-align: center;
+    }
+    
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .step {
+      flex: 1;
+      min-width: 250px;
+      max-width: 320px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--woo-purple);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 30px var(--glow);
+    }
+    
+    .step h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    .step p {
+      color: var(--gray-400);
+      font-size: 0.95rem;
+    }
+    
+    /* Features Grid */
+    .features {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .features h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .features > p {
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .feature-card {
+      background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+      border: 1px solid var(--gray-700);
+      border-radius: 24px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--woo-purple), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(127, 84, 179, 0.3);
+    }
+    
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(127, 84, 179, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.75rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    .feature-card p {
+      color: var(--gray-400);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .feature-card .free-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(37, 211, 102, 0.1);
+      color: var(--whatsapp);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    /* Comparison Table */
+    .comparison {
+      padding: 6rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .comparison h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .comparison > p {
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+    }
+    
+    .comparison-table {
+      width: 100%;
+      background: var(--gray-900);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--gray-700);
+    }
+    
+    .comparison-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1rem 1.5rem;
+      text-align: left;
+    }
+    
+    .comparison-table th {
+      background: var(--gray-800);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .comparison-table th:first-child {
+      text-align: left;
+    }
+    
+    .comparison-table th:not(:first-child) {
+      text-align: center;
+    }
+    
+    .comparison-table td {
+      border-top: 1px solid var(--gray-700);
+    }
+    
+    .comparison-table td:not(:first-child) {
+      text-align: center;
+    }
+    
+    .comparison-table .check {
+      color: var(--whatsapp);
+      font-size: 1.25rem;
+    }
+    
+    .comparison-table .cross {
+      color: var(--gray-600);
+      font-size: 1.25rem;
+    }
+    
+    .comparison-table .price {
+      color: #f97316;
+      font-weight: 600;
+    }
+    
+    .wazap-col {
+      background: rgba(127, 84, 179, 0.1);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: 8rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 800px;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(127, 84, 179, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+    
+    .cta-content {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-section p {
+      font-size: 1.25rem;
+      color: var(--gray-300);
+      margin-bottom: 2.5rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .cta-note {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+    }
+    
+    /* Requirements */
+    .requirements {
+      padding: 4rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .requirements-box {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-700);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    
+    .requirements h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    
+    .requirements ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .requirements li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--gray-300);
+    }
+    
+    .requirements li svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--whatsapp);
+    }
+    
+    /* Footer */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--gray-800);
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .footer-links a {
+      color: var(--gray-400);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--white);
+    }
+    
+    .footer-copy {
+      color: var(--gray-400);
+      font-size: 0.85rem;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 7rem;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+      }
+      
+      .hero-cta {
+        justify-content: center;
+      }
+      
+      .hero-visual {
+        margin-top: 3rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .comparison-table {
+        overflow-x: auto;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      nav {
+        padding: 1rem;
+      }
+      
+      .nav-cta {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  
+  <!-- Navigation -->
+  <nav>
+    <a href="https://get-wazap.com" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </div>
+      Wazap
+    </a>
+    <div class="nav-links">
+      <a href="https://get-wazap.com">Shopify</a>
+      <a href="#features">Features</a>
+      <a href="#installation">Installation</a>
+    </div>
+    <a href="#download" class="nav-cta">Download Free</a>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        100% Free - No Premium Version
+      </div>
+      <h1>
+        <span class="highlight-green">WhatsApp</span> for <span class="highlight">WooCommerce</span>
+      </h1>
+      <p>
+        Add WhatsApp chat & share buttons to your WooCommerce store. Multiple agents, business hours, cart recovery - all included for free.
+      </p>
+      <div class="hero-cta">
+        <a href="#download" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download Plugin
+        </a>
+        <a href="#features" class="btn-secondary">
+          See Features
+        </a>
+      </div>
+      <p class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        Works with WordPress 5.8+ and WooCommerce 5.0+
+      </p>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="plugin-preview">
+        <div class="plugin-header">
+          <div class="plugin-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <div class="plugin-info">
+            <h3>Wazap</h3>
+            <span>Version 1.0.0</span>
+          </div>
+        </div>
+        <div class="plugin-features">
+          <div class="plugin-feature">
+            <span class="plugin-feature-icon">💬</span>
+            <span>WhatsApp Chat Button</span>
+            <span class="free-tag">FREE</span>
+          </div>
+          <div class="plugin-feature">
+            <span class="plugin-feature-icon">📤</span>
+            <span>Product Sharing</span>
+            <span class="free-tag">FREE</span>
+          </div>
+          <div class="plugin-feature">
+            <span class="plugin-feature-icon">👥</span>
+            <span>Multiple Agents</span>
+            <span class="free-tag">FREE</span>
+          </div>
+          <div class="plugin-feature">
+            <span class="plugin-feature-icon">🛒</span>
+            <span>Cart Recovery</span>
+            <span class="free-tag">FREE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Installation Steps -->
+  <section class="installation" id="installation">
+    <div style="text-align: center;">
+      <span class="section-label">Installation</span>
+      <h2>Up and running in 3 steps</h2>
+    </div>
+    
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Download Plugin</h3>
+        <p>Download the ZIP file and upload it to your WordPress site via Plugins → Add New → Upload.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Enter WhatsApp Number</h3>
+        <p>Go to Wazap in your admin menu and enter your WhatsApp number with country code.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Start Chatting</h3>
+        <p>That's it! The WhatsApp buttons appear automatically on your store.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Grid -->
+  <section class="features" id="features">
+    <span class="section-label">Features</span>
+    <h2>Everything you need, 100% free</h2>
+    <p>Features that others charge $20-50/month for - included free with Wazap.</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">💬</div>
+        <h3>WhatsApp Chat Button</h3>
+        <p>Floating chat button on every page. Customers can reach you with one tap.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">📤</div>
+        <h3>Product Sharing</h3>
+        <p>"Get opinion" button lets customers share products with friends. Free word-of-mouth marketing!</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">👥</div>
+        <h3>Multiple Agents</h3>
+        <p>Add your team members. Customers choose who to chat with - Sales, Support, or Manager.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">🕐</div>
+        <h3>Business Hours</h3>
+        <p>Show online/offline status based on your working hours. Automatic timezone handling.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">🛒</div>
+        <h3>Cart Recovery</h3>
+        <p>When customers return after abandoning cart, a friendly popup offers WhatsApp support.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="free-badge">FREE</span>
+        <div class="feature-icon">📊</div>
+        <h3>Analytics</h3>
+        <p>Track every click in Google Analytics & Facebook Pixel. See what drives conversations.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Comparison Table -->
+  <section class="comparison">
+    <span class="section-label">Comparison</span>
+    <h2>Why choose Wazap?</h2>
+    <p>See how we compare to other WhatsApp plugins.</p>
+    
+    <div class="comparison-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="wazap-col">Wazap</th>
+            <th>Others</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chat Button</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="check">✓</span> Free</td>
+          </tr>
+          <tr>
+            <td>Share Button</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>Multiple Agents</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="price">$15-49/mo</span></td>
+          </tr>
+          <tr>
+            <td>Business Hours</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="price">$15-25/mo</span></td>
+          </tr>
+          <tr>
+            <td>Cart Recovery</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="price">$19-29/mo</span></td>
+          </tr>
+          <tr>
+            <td>Analytics</td>
+            <td class="wazap-col"><span class="check">✓</span> Free</td>
+            <td><span class="price">$9-19/mo</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <!-- Download CTA -->
+  <section class="cta-section" id="download">
+    <div class="cta-content">
+      <h2>Ready to boost sales with WhatsApp?</h2>
+      <p>Download Wazap now and start chatting with customers in minutes.</p>
+      
+      <div class="cta-buttons">
+        <a href="/downloads/wazap-woocommerce.zip" id="download-btn" class="btn-primary" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download Wazap (ZIP)
+        </a>
+      </div>
+      
+      <p class="cta-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        Free forever. No credit card required.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Requirements -->
+  <section class="requirements">
+    <div class="requirements-box">
+      <h3>📋 Requirements</h3>
+      <ul>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          WordPress 5.8 or higher
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          WooCommerce 5.0 or higher
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          PHP 7.4 or higher
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          WhatsApp (regular or Business)
+        </li>
+      </ul>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <a href="https://get-wazap.com" class="footer-logo">
+        <div class="logo-icon" style="width:32px;height:32px;border-radius:8px;background:var(--woo-purple);">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+            <path fill="white" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </div>
+        Wazap
+      </a>
+      
+      <div class="footer-links">
+        <a href="https://get-wazap.com">Shopify Version</a>
+        <a href="mailto:support@get-wazap.com">Support</a>
+        <a href="#">Documentation</a>
+      </div>
+      
+      <span class="footer-copy">© 2026 Wazap. Free WhatsApp for WooCommerce.</span>
+    </div>
+  </footer>
+</body>
+</html>

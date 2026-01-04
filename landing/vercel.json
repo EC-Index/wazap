@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/woocommerce", "destination": "/woocommerce/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/downloads/(.*)",
+      "headers": [
+        { "key": "Content-Disposition", "value": "attachment" }
+      ]
+    }
+  ]
+}

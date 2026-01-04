@@ -47,7 +47,6 @@
       overflow-x: hidden;
     }
     
-    /* Animated Background */
     .bg-gradient {
       position: fixed;
       top: 0;
@@ -61,7 +60,6 @@
       z-index: -1;
     }
     
-    /* Navigation */
     nav {
       position: fixed;
       top: 0;
@@ -103,6 +101,23 @@
       fill: white;
     }
     
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: var(--gray-300);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: white;
+    }
+    
     .nav-cta {
       padding: 0.75rem 1.5rem;
       background: var(--whatsapp);
@@ -120,7 +135,6 @@
       box-shadow: 0 0 40px var(--glow);
     }
     
-    /* Hero Section */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -261,7 +275,6 @@
       color: var(--gray-400);
     }
     
-    /* Hero Visual */
     .hero-visual {
       flex: 1;
       display: flex;
@@ -381,7 +394,6 @@
       color: var(--gray-400);
     }
     
-    /* Floating Buttons Demo */
     .demo-buttons {
       position: absolute;
       bottom: 80px;
@@ -422,7 +434,6 @@
       to { opacity: 1; transform: translateX(0); }
     }
     
-    /* Problem Section */
     .problem {
       padding: 6rem 2rem;
       max-width: 1200px;
@@ -492,7 +503,6 @@
       margin-top: 1rem;
     }
     
-    /* Features Section */
     .features {
       padding: 6rem 2rem;
       max-width: 1200px;
@@ -582,7 +592,6 @@
       line-height: 1.6;
     }
     
-    /* How It Works */
     .how-it-works {
       padding: 6rem 2rem;
       max-width: 1200px;
@@ -646,7 +655,6 @@
       color: var(--gray-300);
     }
     
-    /* CTA Section */
     .cta-section {
       padding: 8rem 2rem;
       text-align: center;
@@ -705,7 +713,6 @@
       stroke: var(--whatsapp);
     }
     
-    /* Footer */
     footer {
       padding: 3rem 2rem;
       border-top: 1px solid var(--gray-800);
@@ -752,7 +759,6 @@
       font-size: 0.85rem;
     }
     
-    /* Animations */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -763,7 +769,6 @@
       to { opacity: 1; }
     }
     
-    /* Responsive */
     @media (max-width: 968px) {
       .hero {
         flex-direction: column;
@@ -800,6 +805,10 @@
       .demo-btn {
         width: 44px;
         height: 44px;
+      }
+      
+      .nav-links {
+        display: none;
       }
     }
     
@@ -838,7 +847,6 @@
 <body>
   <div class="bg-gradient"></div>
   
-  <!-- Navigation -->
   <nav>
     <a href="#" class="logo">
       <div class="logo-icon">
@@ -848,10 +856,13 @@
       </div>
       Wazap
     </a>
+    <div class="nav-links">
+      <a href="/woocommerce">WooCommerce</a>
+      <a href="#features">Features</a>
+    </div>
     <a href="https://admin.shopify.com/oauth/install?client_id=a1b2083082da051875252d81b3ba7f86" class="nav-cta">Install Free</a>
   </nav>
   
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <div class="hero-badge">New: Cart Recovery Feature</div>
@@ -915,7 +926,6 @@
           <div class="phone-input">Type a message...</div>
         </div>
         
-        <!-- Floating Buttons Demo -->
         <div class="demo-buttons">
           <div class="demo-btn share">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -936,7 +946,6 @@
     </div>
   </section>
   
-  <!-- Problem Section -->
   <section class="problem">
     <span class="section-label">The Problem</span>
     <h2>Your customers prefer WhatsApp over email. Are you missing out?</h2>
@@ -965,7 +974,6 @@
     </div>
   </section>
   
-  <!-- Features Section -->
   <section class="features" id="features">
     <span class="section-label">Features</span>
     <h2>Everything you need to sell more via WhatsApp</h2>
@@ -1046,7 +1054,6 @@
     </div>
   </section>
   
-  <!-- How It Works -->
   <section class="how-it-works">
     <h2>Up and running in 3 simple steps</h2>
     
@@ -1074,7 +1081,6 @@
     </div>
   </section>
   
-  <!-- CTA Section -->
   <section class="cta-section">
     <div class="cta-content">
       <h2>Ready to boost your sales with WhatsApp?</h2>
@@ -1099,7 +1105,6 @@
     </div>
   </section>
   
-  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <a href="#" class="footer-logo">
@@ -1112,9 +1117,9 @@
       </a>
       
       <div class="footer-links">
-        <a href="mailto:support@wazap.app">Contact</a>
+        <a href="/woocommerce">WooCommerce Version</a>
+        <a href="mailto:support@get-wazap.com">Contact</a>
         <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
       </div>
       
       <span class="footer-copy">© 2026 Wazap. Made for Shopify merchants.</span>
