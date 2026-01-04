@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wazap Demo - See it in action</title>
+  <meta name="description" content="Interactive demo of Wazap WhatsApp plugin for WooCommerce. See how it looks on a real store.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+    
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #7f54b3 0%, #9b6dd1 100%);
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10000;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+    
+    .demo-banner-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+    
+    .demo-banner-text strong {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    
+    .demo-banner-cta {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .demo-banner-cta a {
+      padding: 8px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    
+    .demo-banner-cta .btn-download {
+      background: white;
+      color: #7f54b3;
+    }
+    
+    .demo-banner-cta .btn-download:hover {
+      transform: scale(1.05);
+    }
+    
+    .demo-banner-cta .btn-back {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    
+    .demo-banner-cta .btn-back:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    /* Fake WooCommerce Store */
+    .store-container {
+      margin-top: 52px;
+    }
+    
+    /* Store Header */
+    .store-header {
+      background: white;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .store-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .store-logo span {
+      font-size: 28px;
+    }
+    
+    .store-nav {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .store-nav a {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .store-nav a:hover {
+      color: #7f54b3;
+    }
+    
+    .store-cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .store-cart svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .cart-count {
+      background: #7f54b3;
+      color: white;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 16px 40px;
+      font-size: 13px;
+      color: #888;
+    }
+    
+    .breadcrumb a {
+      color: #888;
+      text-decoration: none;
+    }
+    
+    .breadcrumb a:hover {
+      color: #7f54b3;
+    }
+    
+    /* Product Page */
+    .product-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 40px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+    
+    .product-gallery {
+      position: relative;
+    }
+    
+    .product-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 200px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    .product-thumbnails {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .product-thumb {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    
+    .product-thumb:first-child {
+      border-color: #7f54b3;
+    }
+    
+    .product-thumb:hover {
+      border-color: #7f54b3;
+    }
+    
+    .product-info {
+      padding-top: 20px;
+    }
+    
+    .product-category {
+      color: #7f54b3;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    
+    .product-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .stars {
+      color: #fbbf24;
+      font-size: 18px;
+    }
+    
+    .rating-text {
+      color: #888;
+      font-size: 14px;
+    }
+    
+    .product-price {
+      font-size: 36px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 8px;
+    }
+    
+    .product-price-old {
+      font-size: 20px;
+      color: #999;
+      text-decoration: line-through;
+      margin-left: 12px;
+      font-weight: 400;
+    }
+    
+    .product-stock {
+      color: #22c55e;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .product-stock::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+    
+    .product-description {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    
+    .product-options {
+      margin-bottom: 24px;
+    }
+    
+    .option-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .size-options {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .size-btn {
+      width: 48px;
+      height: 48px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .size-btn:hover,
+    .size-btn.active {
+      border-color: #7f54b3;
+      background: #f9f5ff;
+    }
+    
+    .product-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .qty-btn {
+      width: 44px;
+      height: 48px;
+      border: none;
+      background: #f5f5f5;
+      font-size: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .qty-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .qty-input {
+      width: 50px;
+      height: 48px;
+      border: none;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .btn-add-cart {
+      flex: 1;
+      height: 52px;
+      background: #7f54b3;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn-add-cart:hover {
+      background: #6b4799;
+      transform: translateY(-2px);
+    }
+    
+    .btn-add-cart svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .product-meta {
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .meta-item {
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    .meta-item strong {
+      color: #333;
+    }
+    
+    /* Wazap Widget */
+    #wazap-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    
+    .wazap-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .wazap-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+    }
+    
+    .wazap-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+    
+    .wazap-btn-share {
+      background: #1a1a1a;
+      color: white;
+    }
+    
+    .wazap-btn-chat {
+      background: #25D366;
+      color: white;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .wazap-btn-chat:hover {
+      animation: none;
+    }
+    
+    /* Agent Popup */
+    .agent-popup {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      margin-bottom: 12px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 300px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .agent-popup.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .agent-popup-header {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .agent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .agent-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .agent-item:hover {
+      background: #f5f5f5;
+    }
+    
+    .agent-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .agent-info {
+      flex: 1;
+    }
+    
+    .agent-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .agent-role {
+      font-size: 12px;
+      color: #888;
+    }
+    
+    .agent-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+    
+    /* Share Popup */
+    .share-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10001;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    
+    .share-popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .share-popup-content {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    
+    .share-popup.active .share-popup-content {
+      transform: scale(1);
+    }
+    
+    .share-popup-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+    }
+    
+    .share-popup-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+    
+    .share-popup h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    
+    .share-popup p {
+      color: #666;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+    
+    .share-preview {
+      background: #f9f9f9;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    
+    .share-preview-product {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .share-preview-img {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+    
+    .share-preview-info h4 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    
+    .share-preview-info span {
+      font-size: 13px;
+      color: #888;
+    }
+    
+    .share-btn-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .share-btn-whatsapp:hover {
+      background: #128C7E;
+    }
+    
+    .share-btn-whatsapp svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
+    }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #333;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 10002;
+    }
+    
+    .toast.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    /* Feature Callouts */
+    .feature-callout {
+      position: absolute;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      font-size: 13px;
+      color: #333;
+      white-space: nowrap;
+      animation: fadeInOut 4s ease infinite;
+    }
+    
+    .feature-callout::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      transform: rotate(45deg);
+    }
+    
+    .callout-share {
+      bottom: 130px;
+      right: 180px;
+    }
+    
+    .callout-share::after {
+      right: -6px;
+      top: 50%;
+      margin-top: -6px;
+    }
+    
+    .callout-chat {
+      bottom: 70px;
+      right: 180px;
+    }
+    
+    .callout-chat::after {
+      right: -6px;
+      top: 50%;
+      margin-top: -6px;
+    }
+    
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    
+    /* Responsive */
+    @media (max-width: 968px) {
+      .product-page {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 30px;
+      }
+      
+      .store-nav {
+        display: none;
+      }
+      
+      .demo-banner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+      
+      .wazap-btn span {
+        display: none;
+      }
+      
+      .wazap-btn {
+        padding: 16px;
+        border-radius: 50%;
+      }
+      
+      .feature-callout {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .store-header {
+        padding: 12px 16px;
+      }
+      
+      .breadcrumb {
+        padding: 12px 16px;
+      }
+      
+      .product-title {
+        font-size: 24px;
+      }
+      
+      .product-price {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    <div class="demo-banner-text">
+      <strong>🎮 LIVE DEMO</strong>
+      <span>This is how Wazap looks on a WooCommerce store. Try clicking the buttons!</span>
+    </div>
+    <div class="demo-banner-cta">
+      <a href="/woocommerce" class="btn-back">← Back</a>
+      <a href="/downloads/wazap-woocommerce.zip" class="btn-download" download>Download Plugin</a>
+    </div>
+  </div>
+
+  <!-- Fake Store -->
+  <div class="store-container">
+    <!-- Header -->
+    <header class="store-header">
+      <div class="store-logo">
+        <span>🪴</span>
+        PlantShop
+      </div>
+      <nav class="store-nav">
+        <a href="#">Shop</a>
+        <a href="#">Indoor Plants</a>
+        <a href="#">Outdoor</a>
+        <a href="#">Pots & Planters</a>
+        <a href="#">Care Guide</a>
+      </nav>
+      <div class="store-cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-count">2</span>
+      </div>
+    </header>
+    
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="#">Home</a> / <a href="#">Indoor Plants</a> / Monstera Deliciosa
+    </div>
+    
+    <!-- Product -->
+    <main class="product-page">
+      <div class="product-gallery">
+        <div class="product-image">🌿</div>
+        <div class="product-thumbnails">
+          <div class="product-thumb">🌿</div>
+          <div class="product-thumb">🪴</div>
+          <div class="product-thumb">🌱</div>
+          <div class="product-thumb">📦</div>
+        </div>
+      </div>
+      
+      <div class="product-info">
+        <div class="product-category">Indoor Plants</div>
+        <h1 class="product-title">Monstera Deliciosa<br>Swiss Cheese Plant</h1>
+        
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">4.9 (128 reviews)</span>
+        </div>
+        
+        <div class="product-price">
+          $49.99
+          <span class="product-price-old">$69.99</span>
+        </div>
+        
+        <div class="product-stock">In Stock - Ships Tomorrow</div>
+        
+        <p class="product-description">
+          The Monstera Deliciosa, also known as the Swiss Cheese Plant, is famous for its quirky natural leaf holes. These tropical plants are easy to care for and add instant jungle vibes to any room. Perfect for beginners!
+        </p>
+        
+        <div class="product-options">
+          <div class="option-label">Size</div>
+          <div class="size-options">
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn">XL</button>
+          </div>
+        </div>
+        
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="qty-btn" onclick="updateQty(-1)">−</button>
+            <input type="text" class="qty-input" value="1" id="qty" readonly>
+            <button class="qty-btn" onclick="updateQty(1)">+</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            Add to Cart
+          </button>
+        </div>
+        
+        <div class="product-meta">
+          <div class="meta-item"><strong>SKU:</strong> MON-DEL-001</div>
+          <div class="meta-item"><strong>Category:</strong> Indoor Plants, Tropical</div>
+          <div class="meta-item"><strong>Tags:</strong> Easy Care, Air Purifying, Pet Friendly</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Wazap Widget -->
+  <div id="wazap-widget">
+    <!-- Feature Callouts -->
+    <div class="feature-callout callout-share">📤 Share with friends</div>
+    <div class="feature-callout callout-chat">💬 Instant support</div>
+    
+    <!-- Agent Popup -->
+    <div class="agent-popup" id="agentPopup">
+      <div class="agent-popup-header">Choose who to chat with</div>
+      <div class="agent-list">
+        <a href="https://wa.me/491701234567?text=Hi!%20I%20have%20a%20question%20about%20the%20Monstera%20Deliciosa" target="_blank" class="agent-item">
+          <div class="agent-avatar">S</div>
+          <div class="agent-info">
+            <div class="agent-name">Sarah</div>
+            <div class="agent-role">Plant Expert</div>
+          </div>
+          <div class="agent-status"></div>
+        </a>
+        <a href="https://wa.me/491701234567?text=Hi!%20I%20need%20help%20with%20my%20order" target="_blank" class="agent-item">
+          <div class="agent-avatar">M</div>
+          <div class="agent-info">
+            <div class="agent-name">Mike</div>
+            <div class="agent-role">Support</div>
+          </div>
+          <div class="agent-status"></div>
+        </a>
+        <a href="https://wa.me/491701234567?text=Hi!%20I%20have%20a%20business%20inquiry" target="_blank" class="agent-item">
+          <div class="agent-avatar">J</div>
+          <div class="agent-info">
+            <div class="agent-name">Julia</div>
+            <div class="agent-role">Sales Manager</div>
+          </div>
+          <div class="agent-status"></div>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Share Button -->
+    <button class="wazap-btn wazap-btn-share" onclick="openSharePopup()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <span>Get opinion</span>
+    </button>
+    
+    <!-- Chat Button -->
+    <button class="wazap-btn wazap-btn-chat" onclick="toggleAgentPopup()">
+      <svg viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span>Chat</span>
+    </button>
+  </div>
+
+  <!-- Share Popup -->
+  <div class="share-popup" id="sharePopup" onclick="closeSharePopup(event)">
+    <div class="share-popup-content" onclick="event.stopPropagation()">
+      <div class="share-popup-icon">🌿</div>
+      <h3>Share with a friend</h3>
+      <p>Ask someone what they think about this plant!</p>
+      
+      <div class="share-preview">
+        <div class="share-preview-product">
+          <div class="share-preview-img">🌿</div>
+          <div class="share-preview-info">
+            <h4>Monstera Deliciosa</h4>
+            <span>$49.99 at PlantShop</span>
+          </div>
+        </div>
+      </div>
+      
+      <a href="https://wa.me/?text=Hey!%20What%20do%20you%20think%20about%20this%20plant%3F%20%F0%9F%8C%BF%0A%0AMonstera%20Deliciosa%20-%20%2449.99%0Ahttps%3A%2F%2Fplantshop.com%2Fmonstera" target="_blank" class="share-btn-whatsapp">
+        <svg viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Share via WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Added to cart! 🛒</div>
+
+  <script>
+    // Toggle Agent Popup
+    function toggleAgentPopup() {
+      const popup = document.getElementById('agentPopup');
+      popup.classList.toggle('active');
+    }
+    
+    // Close agent popup when clicking outside
+    document.addEventListener('click', (e) => {
+      const popup = document.getElementById('agentPopup');
+      const widget = document.getElementById('wazap-widget');
+      if (!widget.contains(e.target)) {
+        popup.classList.remove('active');
+      }
+    });
+    
+    // Share Popup
+    function openSharePopup() {
+      document.getElementById('sharePopup').classList.add('active');
+    }
+    
+    function closeSharePopup(e) {
+      if (e.target.id === 'sharePopup') {
+        document.getElementById('sharePopup').classList.remove('active');
+      }
+    }
+    
+    // Quantity
+    function updateQty(delta) {
+      const input = document.getElementById('qty');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      if (val > 10) val = 10;
+      input.value = val;
+    }
+    
+    // Add to Cart
+    function addToCart() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 2000);
+    }
+    
+    // Size buttons
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
